@@ -1,0 +1,5 @@
+see the error at this code (node_modules\expo\bin\cli.js)
+spawn('expo-cli', process.argv.slice(2), { stdio: 'inherit' })
+
+Probably it's the bug of child_process on Window when spawn .bat or .cmd file, the suggest fix is:
+spawn('expo-cli', process.argv.slice(2), { stdio: 'inherit', shell: true })
