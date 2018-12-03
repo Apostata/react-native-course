@@ -1,0 +1,33 @@
+React Native
+    Pré-requisito:
+        Conhecimentos em js(es6), React e Redux
+    
+
+    Iniciando sem usar o create-react-native-app
+        https://facebook.github.io/react-native/docs/getting-started
+
+        Windows:
+            Instalar chocolatey(https://chocolatey.org/), um gerenciador de pacotes para Windows.
+            do terminal:
+                choco install -y nodejs.install python2 jdk8 (node + jdk8 + python)
+            
+            Instalar o React Native CLI:
+                npm install -g react-native-cli 
+            
+            Instalar Android Studio checando as seguintes configurações customizadas:
+                Android SDK
+                Android SDK Platform
+                Performance (Intel ® HAXM)
+                Android Virtual Device
+
+            Instalar o Android SDK:
+                React Native precisa particularmente da versão 8.1 (Oreo)
+                ao instalar essa versão do Android, selecione os seguintes itens:
+                Android SDK Platform 27
+                Intel x86 Atom_64 System Image ou Google APIs Intel x86 Atom System Image
+
+
+            Se criou um app pelo create-react-native-app, pode digitar no terminal 
+                npm run eject
+            para mostrar as pastas do Android studio e para melhor customizar o projeto
+            

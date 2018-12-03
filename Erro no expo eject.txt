@@ -1,0 +1,9 @@
+Do not use expo, it has a bug for a moment, delete generated project and start again with these commands:
+
+npm install -g react-native-cli 
+
+react-native init AwesomeProject 
+
+cd AwesomeProject
+
+react-native run-android 
