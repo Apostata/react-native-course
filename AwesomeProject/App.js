@@ -22,21 +22,54 @@ export default class App extends Component<Props> {
       placeName: ''
   };
 
-  onChangePlaceName(event){
-    alert(event);
+  onChangePlaceName(val){
+    //alert(event);
+
+    this.setState({
+      ...this.setState,
+      placeName: val
+    })
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-        <TextInput  value={this.state.placeName} onChangeText={this.onChangePlaceName.bind(this)} />
+      <View style={teste.container}>
+        <Text>{this.state.placeName}</Text>
+        <TextInput
+          style = {{width:200}}
+          placeholder="Awesome Place for an input"
+          value={this.state.placeName}
+          onChangeText={this.onChangePlaceName.bind(this)} />
       </View>
     );
   }
-}
+};
+
+const teste = {...styles}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {

@@ -1,0 +1,11 @@
+criar variavel
+ANDROID_HOME
+    C:\Users\{usuario}\AppData\Local\Android\Sdk
+    
+na bariavel PATH de usuario
+    C:\Users\{usuario}\AppData\Local\Android\Sdk/platform-tools
+
+
+
+
+
