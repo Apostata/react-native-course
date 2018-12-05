@@ -4,7 +4,12 @@ import ListItem from './ListItem/ListItem';
  
 const list = (props) => {
     const outoPutList = props.places.map((place, idx)=>{
-        return (<ListItem key={idx} placeName={place} />);
+        return (
+            <ListItem 
+                key={idx}
+                placeName={place}
+                onPressed={()=>alert(`item pressed ${idx}`)}/>
+        );
     });
  
     return (

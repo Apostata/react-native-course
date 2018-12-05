@@ -6,25 +6,13 @@ import InputContainer from './src/components/InputContainer/InputContainer';
 type Props = {};
 export default class App extends Component<Props> {
   state = {
-      placeName: '',
       places: []
   };
- 
-  onChangePlaceName(val){
-    //alert(event);
- 
-    this.setState({
-      ...this.setState,
-      placeName: val
-    })
-  }
- 
-  placeSubmitHandler(){
-    if(this.state.placeName.trim() === "" ) return;
+  
+  onItemAdded(placeName){
     this.setState(prevState => {
       return {
-        placeName:"",
-        places: prevState.places.concat(prevState.placeName)
+        places: prevState.places.concat(placeName)
       };
     });
   }
@@ -36,11 +24,7 @@ export default class App extends Component<Props> {
  
        
         <InputContainer
-          inputValue={this.state.placeName}
-          placeholder={"Awesome Place for an input"}
-          changeText={this.onChangePlaceName.bind(this)}
-          btnTitle={"Adiciona item à lista"}
-          clickButton={this.placeSubmitHandler.bind(this)}
+          onItemAdded={this.onItemAdded.bind(this)}
         />
  
         <List 

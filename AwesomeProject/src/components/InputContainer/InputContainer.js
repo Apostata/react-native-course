@@ -1,22 +1,41 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {View, TextInput, Button, StyleSheet} from 'react-native';
  
-const inputContainer = (props)=>{
-    return (
-        <View style={componentStyles.inputContainer}>
-            <TextInput
-                style={componentStyles.placeInput}
-                value={props.inputValue}
-                placeholder={props.placeholder}
-                onChangeText={props.changeText}
-            />
-            <Button
-                style={componentStyles.placeButton}
-                title={props.btnTitle}
-                onPress={props.clickButton}
-            />
-        </View>
-    )
+export default class InputContainer extends Component{
+    state ={
+        placeName : ""
+    };
+
+    placeSubmitHandler(){
+        if(this.state.placeName.trim() === "" ) return;
+       this.props.onItemAdded(this.state.placeName);
+       this.onChangePlaceName('');
+    }
+
+    onChangePlaceName(val){
+        this.setState({
+          ...this.setState,
+          placeName: val
+        })
+    }
+
+    render(){
+        return (
+            <View style={componentStyles.inputContainer}>
+                <TextInput
+                    style={componentStyles.placeInput}
+                    value={this.state.placeName}
+                    placeholder={"Awesome Place for an input"}
+                    onChangeText={this.onChangePlaceName.bind(this)}
+                />
+                <Button
+                    style={componentStyles.placeButton}
+                    title={"ADD"}
+                    onPress={this.placeSubmitHandler.bind(this)}
+                />
+            </View>
+        )
+    }
 }
  
 const componentStyles = StyleSheet.create({
@@ -34,5 +53,3 @@ const componentStyles = StyleSheet.create({
         width:"30%"
     },
 });
-
-export default inputContainer;

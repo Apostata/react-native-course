@@ -31,3 +31,9 @@ React Native
                 npm run eject
             para mostrar as pastas do Android studio e para melhor customizar o projeto
             
+
+            Componentes usado:
+                View -> Tipo uma Div 
+                Text -> Output de texto
+                TextInput - > entrada de texto
+                
