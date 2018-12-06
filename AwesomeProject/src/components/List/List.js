@@ -1,21 +1,21 @@
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import ListItem from './ListItem/ListItem';
+
  
-const list = (props) => {
-    const outoPutList = props.places.map((place, idx)=>{
-        return (
-            <ListItem 
-                key={idx}
-                placeName={place}
-                onPressed={() => props.onDeleteItem(idx)}/>
-        );
-    });
- 
+const list = (props) => { 
     return (
-        <ScrollView style = {componentStyles.list}>
-            {outoPutList}
-        </ScrollView>
+        <FlatList
+            style = {componentStyles.list}
+            data={props.places}
+            renderItem={(data)=>(
+                <ListItem 
+                    placeName={data.item.place}
+                    placeImage={data.item.image}
+                    onPressed={() => props.onDeleteItem(data.item.key)}
+                />
+            )}
+        />
     );
 };
  
