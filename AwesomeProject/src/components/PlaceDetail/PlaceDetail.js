@@ -55,9 +55,9 @@ const placeDetailStyles = StyleSheet.create({
 
     btnContainer:{
         flexDirection: 'row',
-        justifyContent: "space-between"
+        justifyContent: 'space-evenly'
     },
     btn:{
-        width: 100
+        width: 200
     }
 })
