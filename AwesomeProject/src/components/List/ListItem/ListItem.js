@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, Image, TouchableNativeFeedback, TouchableOpacity
 const listItem = (props) => (
     <TouchableOpacity onPress={props.onPressed} >
         <View style={listItemStyles.listItem} >
-            <Image resizeMode="cover" style={listItemStyles.placeImage} source={props.placeImage} />
+            <Image resizeMode="contain" style={listItemStyles.placeImage} source={props.placeImage} />
             <Text>{props.placeName}</Text>
         </View>
     </TouchableOpacity>

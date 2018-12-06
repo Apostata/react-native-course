@@ -4,12 +4,14 @@ import { StyleSheet, Text, View} from 'react-native';
 import List from './src/components/List/List';
 import InputContainer from './src/components/InputContainer/InputContainer';
 import {guid} from './src/utils/helperFunctions';
-import placeImage from './src/assets/demo_image.jpg';
-
+//import placeImage from './src/assets/demo_image.jpg';
+import PlaceDetail from './src/components/PlaceDetail/PlaceDetail';
+import placeDetail from './src/components/PlaceDetail/PlaceDetail';
 
 export default class App extends Component{
   state = {
-      places: []
+      places: [],
+      selectedPlace  :null
   };
   
   onItemAdded(placeName){
@@ -19,39 +21,60 @@ export default class App extends Component{
       return {
         places: prevState.places.concat({
           key: id,
-          place: placeName,
-          image: placeImage
+          name: placeName,
+          image: {
+            uri: "https://demo.yootheme.com/themes/wordpress/2013/showroom/wp-content/uploads/yootheme/widgetkit/lightbox/image6_lightbox.jpg"
+          }
         })
       };
     });
   }
 
-  deletePlace(key){
+  selectPlace(key){
+    this.setState(prevState => {
+      return{
+        selectedPlace: prevState.places.find(place=>{
+          return place.key === key;
+        })
+      }
+    });
+  }
+
+  deletePlace(){
     this.setState(prevState => {
       return{
         places: prevState.places.filter((place)=>{
-          return key !== place.key;
-        })
+          return prevState.selectedPlace.key !== place.key;
+        }),
+        selectedPlace:null
       }
     })
   }
+
+  hideModal(){
+    this.setState({
+      selectedPlace: null
+    });
+  }
  
   render() {
+    
     return (
       <View style={componentStyles.container}>
-        <Text>{this.state.placeName}</Text>
+         <PlaceDetail
+          place={this.state.selectedPlace}
+          deletePlace={this.deletePlace.bind(this)}
+          hideModal={this.hideModal.bind(this)}
+        />
  
-       
         <InputContainer
           onItemAdded={this.onItemAdded.bind(this)}
         />
- 
-        <List 
+         <List 
           places={this.state.places}
-          onDeleteItem={this.deletePlace.bind(this)}
+          onSelectItem={this.selectPlace.bind(this)}
         />
- 
-      </View>
+       </View>
       
     );
   }

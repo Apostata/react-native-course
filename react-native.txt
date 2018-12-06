@@ -32,9 +32,22 @@ React Native
             para mostrar as pastas do Android studio e para melhor customizar o projeto
             
 
+            Todos os metodos de lifeCylce do React, podem ser usados no React Native.
+
             Componentes usado:
                 View -> Tipo uma Div 
                 Text -> Output de texto
                 TextInput - > entrada de texto
                 ScrollView -> para adicionar overflow na view
-                
+                FlatList -> cria uma Lista passado data e o render de cada item 
+                Image -> para renderizar imagens
+                    resizeMode={
+                        contain -> se encaixa dentro das dimensoes passadas(height e width)
+                        cover -> redimensiona a imagem para se ajustar as dimensoes
+                    }
+                    carregando da web = <Image resizeMode="contain" style={listItemStyles.placeImage} source={props.placeImage} />
+
+            Referência do básico:
+                Understand the Basics: https://github.com/react-community/create-react-native-app
+                Understand Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+                More about images: https://facebook.github.io/react-native/docs/images.html
