@@ -16,6 +16,16 @@ export default class App extends Component<Props> {
       };
     });
   }
+
+  deletePlace(idx){
+    this.setState(prevState => {
+      return{
+        places: prevState.places.filter((place, index)=>{
+          return idx !== index;
+        })
+      }
+    })
+  }
  
   render() {
     return (
@@ -29,6 +39,7 @@ export default class App extends Component<Props> {
  
         <List 
           places={this.state.places}
+          onDeleteItem={this.deletePlace.bind(this)}
         />
  
       </View>

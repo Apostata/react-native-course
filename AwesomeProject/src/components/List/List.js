@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import ListItem from './ListItem/ListItem';
  
 const list = (props) => {
@@ -8,14 +8,14 @@ const list = (props) => {
             <ListItem 
                 key={idx}
                 placeName={place}
-                onPressed={()=>alert(`item pressed ${idx}`)}/>
+                onPressed={() => props.onDeleteItem(idx)}/>
         );
     });
  
     return (
-        <View style = {componentStyles.list}>
+        <ScrollView style = {componentStyles.list}>
             {outoPutList}
-        </View>
+        </ScrollView>
     );
 };
  

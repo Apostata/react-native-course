@@ -36,4 +36,5 @@ React Native
                 View -> Tipo uma Div 
                 Text -> Output de texto
                 TextInput - > entrada de texto
+                ScrollView -> para adicionar overflow na view
                 
