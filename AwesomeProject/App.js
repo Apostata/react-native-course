@@ -70,11 +70,11 @@ export default class App extends Component{
         <InputContainer
           onItemAdded={this.onItemAdded.bind(this)}
         />
-         <List 
+        <List 
           places={this.state.places}
           onSelectItem={this.selectPlace.bind(this)}
         />
-       </View>
+      </View>
       
     );
   }

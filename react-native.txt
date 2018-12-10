@@ -51,3 +51,17 @@ React Native
                 Understand the Basics: https://github.com/react-community/create-react-native-app
                 Understand Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
                 More about images: https://facebook.github.io/react-native/docs/images.html
+            
+            Linkando libraries no IOS:
+                ir na pasta IOS:
+                    ahcar o arquivo {nome do projeto}.xcodeproj
+                    abrir para abrir o projeto no Xcode
+
+                1 - No Xcode, clicar na pasta Libraries -> add files to "{nome do projeto}"
+                Então, na janela que se abrirá:
+                navegar para node_modules e navegar para a biblioteca desejada (exemplo: react-native-vector-icons),
+                e achar o {nome da biblioteca}.xcodeproj ou na pasta raiz ou na pasta IOS
+                então clicar em adicionar.
+
+                2 - então no Xcode ainda, clicar no projetoe em build phases no canto superior direito,
+                achar a aba "Link Binary With Libraries"

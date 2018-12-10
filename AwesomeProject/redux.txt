@@ -1,0 +1,40 @@
+Usando Redux com react-native
+    npm install --save redux react-redux
+
+    Criando uma store:
+        Criar um arquivo configureStore.js: 
+            import { createStore, combineReducers } from 'redux';
+            import {exemplo}Reducer from './reducers/{exemplo}';
+
+            const rootReducer = combineReducers({
+                {exemplo}: {exemplo}Reducer
+            });
+
+            const configureStore = () =>{
+                return createStore(rootReducer);
+            }
+
+            const store = configureStore();
+
+            export default store;
+        
+        No index.js :
+            import React from 'react'
+            import {AppRegistry} from 'react-native';
+            import {Provider} from 'react-redux';
+
+            import App from './App';
+            import {name as appName} from './app.json';
+            import store from './src/store/configureStore';
+
+
+            const RNApp = () => (
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            );
+
+            AppRegistry.registerComponent(appName, () => RNApp);
+
+    Usando javascript remoto para debugar a applicação
+        

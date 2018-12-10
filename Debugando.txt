@@ -1,0 +1,44 @@
+
+Debugando no console do navegador(normalmente da erro):    
+    Corrigindo:
+        no Emulador(CTRL + M ) ou no aparelho (chacoalhar o aparelho)
+        Dev settings > Debug server host & port for device
+        Set localhost:8081
+    
+        no terminal digitar:
+        adb reverse tcp:8081 tcp:8081
+        rodar a aplicação
+
+        para toda vez que for iniciar a aplicação terá de o 2º procedimento
+        se persisteir dar reload no emulardor ou aparelho
+
+Usando o react--native-debugger:
+    Download: https://github.com/jhen0409/react-native-debugger/releases
+
+    integrando com o redux:
+
+    no configStore.js:
+        import { createStore, combineReducers, compose } from 'redux';
+        import placesReducer from './reducers/places';
+
+        const rootReducer = combineReducers({
+            places: placesReducer
+        });
+
+        let composeEnhancers = compose;
+
+        if(__DEV__){
+            composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+        }
+
+        const configureStore = () =>{
+            return createStore(rootReducer, composeEnhancers());
+        }
+
+        const store = configureStore();
+
+        export default store;
+
+Links sobre debbugarndo no React native:
+    React Native Debugger: https://github.com/jhen0409/react-native-debugger
+    More about Debugging: https://facebook.github.io/react-native/docs/debugging.html

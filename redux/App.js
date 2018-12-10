@@ -1,78 +1,34 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View} from 'react-native';
-//import ListItem from './src/components/List//ListItem/ListItem';
+import {connect} from 'react-redux';
+import * as actions from './src/store/actions/index';
 import List from './src/components/List/List';
 import InputContainer from './src/components/InputContainer/InputContainer';
 import {guid} from './src/utils/helperFunctions';
-//import placeImage from './src/assets/demo_image.jpg';
 import PlaceDetail from './src/components/PlaceDetail/PlaceDetail';
-import placeDetail from './src/components/PlaceDetail/PlaceDetail';
 
-export default class App extends Component{
-  state = {
-      places: [],
-      selectedPlace  :null
-  };
-  
-  onItemAdded(placeName){
-    const id = `${guid()}`;//FlatList precisa receber uma key como string
-
-    this.setState(prevState => {
-      return {
-        places: prevState.places.concat({
-          key: id,
-          name: placeName,
-          image: {
-            uri: "https://demo.yootheme.com/themes/wordpress/2013/showroom/wp-content/uploads/yootheme/widgetkit/lightbox/image6_lightbox.jpg"
-          }
-        })
-      };
-    });
+export class App extends Component{
+  onAddPlace = (placeName)=>{
+    console.log('Add place');
+    this.props.onItemAdded(placeName);
   }
 
-  selectPlace(key){
-    this.setState(prevState => {
-      return{
-        selectedPlace: prevState.places.find(place=>{
-          return place.key === key;
-        })
-      }
-    });
-  }
-
-  deletePlace(){
-    this.setState(prevState => {
-      return{
-        places: prevState.places.filter((place)=>{
-          return prevState.selectedPlace.key !== place.key;
-        }),
-        selectedPlace:null
-      }
-    })
-  }
-
-  hideModal(){
-    this.setState({
-      selectedPlace: null
-    });
-  }
- 
-  render() {
+  render() {  
     
     return (
       <View style={componentStyles.container}>
          <PlaceDetail
-          place={this.state.selectedPlace}
-          deletePlace={this.deletePlace.bind(this)}
-          hideModal={this.hideModal.bind(this)}
+          place={this.props.selectedPlace}
+          deletePlace={this.props.deletePlace}
+          hideModal={this.props.hideModal}
         />
  
         <InputContainer
-          onItemAdded={this.onItemAdded.bind(this)}
+          onItemAdded={/*this.props.onItemAdded*/ this.onAddPlace}
         />
          <List 
-          places={this.state.places}
-          onSelectItem={this.selectPlace.bind(this)}
+          places={this.props.places}
+          onSelectItem={this.props.onSelectPlace}
         />
        </View>
       
@@ -89,3 +45,22 @@ const componentStyles = StyleSheet.create({
     justifyContent: "flex-start"
   }
 });
+
+const mapStateToProps = state =>{
+  return{
+    places: state.places.places,
+    selectedPlace: state.places.selectedPlace
+  }
+};
+
+const mapDispatchToProps = dispatch =>{
+  return{
+    onItemAdded: placeName => dispatch(actions.addPlace(placeName)),
+    deletePlace: () => dispatch(actions.deletePlace()),
+    onSelectPlace: key => dispatch(actions.selectPlace(key)),
+    hideModal: () => dispatch(actions.deselectPlace())
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
