@@ -1,0 +1,37 @@
+Linkando libraries no IOS:
+    ir na pasta IOS:
+        ahcar o arquivo {nome do projeto}.xcodeproj
+        abrir para abrir o projeto no Xcode
+
+    1 - No Xcode, clicar na pasta Libraries -> add files to "{nome do projeto}"
+    Então, na janela que se abrirá:
+    navegar para node_modules.
+    navegar para a biblioteca desejada (exemplo: react-native-vector-icons),
+    e achar o {nome da biblioteca}.xcodeproj ou na pasta raiz ou na pasta IOS
+    então clicar em adicionar.
+
+    2 - então no Xcode ainda,
+    clicar no projetoe em build phases no canto superior direito,
+    achar a aba "Link Binary With Libraries"
+    cliar no icone de "+" no final da lista
+    e pesquisar pelo nome ou algo relativa a sua bliblioteca.
+    exemplo: 
+    instalando o react-native-vector-icons:
+        pesquisando por vector,
+        achará uma biblioteca chamada libRNVectoricons,
+        selecione-a e clique em adicionar.
+    
+    NOTA:
+        no caso do react-native-vector-icons.
+        tem o passo adiconal(descrito também no github)
+
+        navegar té node_modules -> react-native-vector-icons -> Fonts
+        copiar a fonte desejada para a raiz do projeto.
+        ou copiar a pasta Fonts e checar create group.
+
+        então no arquivo info.plist
+        clicar com o direito em "information Property List" -> add a row com o uma chave "Fonts provided by application"
+        gerará um array. basta colocar o valor de cada item do array com o nome da fonte:
+        no caso Ionicons.ttf
+        
+Não testado no ios ainda o react-native link react-native-vector-icons
