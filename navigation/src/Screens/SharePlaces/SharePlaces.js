@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
+import { connect } from 'react-redux';
+import InputContainer from '../../components/InputContainer/InputContainer';
+import * as actions from '../../store/actions';
 
 class SharePlacesScreens extends Component {
-    loginHandler(){
-
+    placeAddedHandler(placeName) {
+        this.props.onPlaceAdded(placeName);
     }
 
     render(){
         return (
             <View>
-                <Text>SharePlaces</Text>
+                <InputContainer onItemAdded={(name)=>this.placeAddedHandler(name)}/>
             </View>
         )
     }
 }
 
-export default SharePlacesScreens;
+const matchDsipatchToProps = dispatch => {
+    return {
+        onPlaceAdded: placeName => dispatch(actions.addPlace(placeName))
+    }
+}
+
+export default connect(null, matchDsipatchToProps)(SharePlacesScreens);
