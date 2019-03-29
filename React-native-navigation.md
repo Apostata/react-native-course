@@ -79,6 +79,14 @@ Promise.all([
 });
 
 ## Comandos
+`this.props.navigator.push(this.props.componentId, {
+  component: {
+    name: 'example.PushedScreen',
+    passProps: {
+      text: 'Pushed screen'
+    },
+  }
+}`
 `this.props.navigator.pop(); ` volta para ultima página navegada
 `this.props.navigator.popToRoot(params={})` volta para a página inicial
 é possivel até abrir um Modal com o React native navigation
