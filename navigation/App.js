@@ -10,7 +10,7 @@ import PlaceDetailScreen from './src/Screens/PlaceDetail/PlaceDetail';
 Navigation.registerComponent('navigation.AuthScreen', () => AuthScreen, store, Provider);
 Navigation.registerComponent('navigation.FindPlacesScreen', () => FindPlacesScreen, store, Provider);
 Navigation.registerComponent('navigation.SharePlacesScreen', () => SharePlacesScreen, store, Provider);
-Navigation.registerComponent('navigation.PlaceDetailScreen', () => PlaceDetailScreen);
+Navigation.registerComponent('navigation.PlaceDetailScreen', () => PlaceDetailScreen, store, Provider);
 
 //start a app Navigation
 Navigation.startSingleScreenApp({
@@ -18,4 +18,4 @@ Navigation.startSingleScreenApp({
     screen: "navigation.AuthScreen",
     title: "Auth"
   }
-});s
+});
