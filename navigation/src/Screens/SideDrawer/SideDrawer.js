@@ -10,7 +10,7 @@ class SideDrawer extends Component{
         return(
             <View style={sideDrawerStyles.container}>
                 <Text>
-                    side drawer
+                    SideDrawer
                 </Text>
             </View>
         )
@@ -21,8 +21,10 @@ class SideDrawer extends Component{
 export default SideDrawer;
 const sideDrawerStyles = StyleSheet.create({
     container:{
+        paddingTop: 22,
         width: width,
         backgroundColor: 'white',
-        height: '100%'
+        //height: '100%'
+        flex: 1
     }
 })
