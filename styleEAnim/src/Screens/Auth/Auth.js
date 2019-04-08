@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
 import Input from '../../components/UI/Input/Input';
 import Header from '../../components/UI/Header/Header';
 import MainText from '../../components/UI/MainText/MainText'
+import ButtonWithBg from '../../components/UI/ButtonWithBg/ButtonWithBg';
 import startMainTabs from '../MainTabs/MainTabs';
+import backgroundImage from '../../assets/images/background.jpg';
 
 class AuthScreen extends Component {
     loginHandler(){
@@ -12,18 +14,22 @@ class AuthScreen extends Component {
 
     render(){
         return (
-            <View style={styles.container}>
-                <MainText>
-                    <Header>Por favor, Logue-se</Header>
-                </MainText>    
-                <Button style={styles.btn} title="Ir para o Login" onPress={this.loginHandler.bind(this)} />
-                <View style={styles.inputContainer}>   
-                    <Input placeholder="seuemail@domínio.com" style={styles.input} />
-                    <Input placeholder="Senha" style={[styles.input, {borderColor: "red"}]} />
-                    <Input placeholder="Confirme sua senha" style={styles.input} />
+            <ImageBackground source={backgroundImage} style={styles.bgImage} >   
+                <View style={styles.container}>
+                        
+                        <MainText>
+                            <Header>Por favor, Logue-se</Header>
+                        </MainText>    
+                        <ButtonWithBg color="#29aaf4" onPress={this.loginHandler.bind(this)}>Logar-se</ButtonWithBg>
+                        <View style={styles.inputContainer}>   
+                            <Input placeholder="seuemail@domínio.com" style={styles.input} />
+                            <Input placeholder="Senha" style={styles.input} />
+                            <Input placeholder="Confirme sua senha" style={styles.input} />
+                        </View>
+                        <ButtonWithBg color="#29aaf4">Enviar</ButtonWithBg>
+                    
                 </View>
-                <Button style={styles.btn} title="Enviar" />
-            </View>
+            </ImageBackground>
         )
     }
 }
@@ -36,6 +42,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
+
+    bgImage:{
+        width: "100%",
+        flex: 1
+    },
     text:{
         textAlign: 'center',
         width: '100%',
@@ -46,8 +57,5 @@ const styles = StyleSheet.create({
     },
     input:{
        backgroundColor: "#eee"
-    },
-    btn:{
-        alignItems: "center"
     }
 })
