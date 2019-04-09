@@ -3,7 +3,7 @@ import { View, StyleSheet, ImageBackground } from 'react-native';
 import Input from '../../components/UI/Input/Input';
 import Header from '../../components/UI/Header/Header';
 import MainText from '../../components/UI/MainText/MainText'
-import ButtonWithBg from '../../components/UI/ButtonWithBg/ButtonWithBg';
+import ButtonWithBg from  '../../components/UI/ButtonWithBg/ButtonWithBg'
 import startMainTabs from '../MainTabs/MainTabs';
 import backgroundImage from '../../assets/images/background.jpg';
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Image, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Image, Text, Button, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
@@ -13,6 +13,19 @@ class PlaceDetail extends Component{
 
     render(){
         const { place } = this.props;
+        let content = (
+            <TouchableOpacity onPress={this.placeDeletedHandler.bind(this)}>
+                <Icon  size={30} name="ios-trash" color="#F00" />
+            </TouchableOpacity>
+        );
+
+        if(Platform.OS === "android"){
+            content =(
+                <TouchableNativeFeedback onPress={this.placeDeletedHandler.bind(this)}>
+                    <Icon  size={30} name="md-trash" color="#F00" />
+                </TouchableNativeFeedback>
+            );
+        }
         return (
             <View style={placeDetailStyles.container}>
                 <View >
@@ -22,12 +35,8 @@ class PlaceDetail extends Component{
                 
                 <View style={placeDetailStyles.btnContainer}>
                     <View style={placeDetailStyles.btn}>   
-
-                        <TouchableOpacity onPress={this.placeDeletedHandler.bind(this)}>
-                            <Icon  size={30} name="ios-trash" color="#F00" />
-                        </TouchableOpacity>
+                        {content}                       
                     </View>
-                    
                 </View>
             </View>
         );

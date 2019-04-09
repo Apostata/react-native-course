@@ -1,12 +1,13 @@
 import { Navigation } from 'react-native-navigation';
+import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const startMainTabs = async () =>{
     var sources = []
     // Promise.all([
-        sources[0] = await Icon.getImageSource('md-map', 30),
-        sources[1] = await Icon.getImageSource('ios-share-alt', 30)
-        sources[2] = await Icon.getImageSource('ios-menu', 30)
+        sources[0] = await Icon.getImageSource(Platform.OS === 'android' ? 'md-map' : 'ios-map', 30),
+        sources[1] = await Icon.getImageSource(Platform.OS === 'android' ? 'md-share-alt' : 'ios-share', 30)
+        sources[2] = await Icon.getImageSource(Platform.OS === 'android' ? 'md-menu' : 'ios-menu', 30)
     // ]).then( sources => {
         Navigation.startTabBasedApp({
             tabs:[

@@ -1,0 +1,1 @@
+# Using Platadorm APi para diferentes peculiaridades entrs os OSs
