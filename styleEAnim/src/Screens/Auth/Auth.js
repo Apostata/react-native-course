@@ -10,25 +10,24 @@ import backgroundImage from '../../assets/images/background.jpg';
 class AuthScreen extends Component {
 
     state = {
-        resStyles:{
-            direction: "column",
-            justifyContent: 'flex-start',
-            width: '100%',
-            showHeader: true
-        }
+        viewMode: Dimensions.get('window').height < 500 ? "landscape" : "portrait"
     };
 
     constructor(props){
         super(props);
-        Dimensions.addEventListener('change', dim =>{
-            this.setState({
-                resStyles:{
-                    direction: Dimensions.get('window').height < 500? "row" : "column",
-                    justifyContent: Dimensions.get('window').height < 500? 'space-between' : "flex-start",
-                    width: Dimensions.get('window').height < 500? '45%' : '100%',
-                    showHeader: Dimensions.get('window').height < 500? false : true
-                }
-            });
+    }
+
+    componentDidMount(){
+        Dimensions.addEventListener('change', this.updateStyles);
+    }
+
+    componentWillUnmount(){
+        Dimensions.removeEventListener('change', this.updateStyles);
+    }
+
+    updateStyles = (dims) =>{
+        this.setState({
+            viewMode: dims.window.height < 500 ? "landscape" : "portrait"
         });
     }
 
@@ -37,16 +36,15 @@ class AuthScreen extends Component {
     }
 
     render(){
-        const {resStyles} = this.state;
+        const {viewMode} = this.state;
         let headingText = null;
-        if(resStyles.showHeader){
+        if(viewMode === "portrait"){
             headingText = (
                 <MainText>
                     <Header>Por favor, Logue-se</Header>
                 </MainText>
             );
         }
-
         return (
             <ImageBackground source={backgroundImage} style={styles.bgImage} >   
                 <View style={styles.container}>
@@ -55,14 +53,11 @@ class AuthScreen extends Component {
                         <View style={styles.inputContainer}>   
                             <Input placeholder="seuemail@domínio.com" style={styles.input} />
                             
-                            <View style={{
-                                flexDirection: resStyles.direction, 
-                                justifyContent: resStyles.justifyContent
-                            }}>
-                                <View style={{width: resStyles.width}}>
+                            <View style={styles[`${viewMode}PasswordContainer`]}>
+                                <View style={styles[`${viewMode}PasswordWrapper`]}>
                                     <Input placeholder="Senha" style={[styles.input, styles.inputInside]} />
                                 </View>
-                                <View style={{width: resStyles.width}}>
+                                <View style={styles[`${viewMode}PasswordWrapper`]}>
                                     <Input placeholder="Confirme sua senha" style={[styles.input, styles.inputInside]} />
                                 </View>
                             </View>
@@ -83,13 +78,22 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
-    passwordContainer:{
-        flexDirection: Dimensions.get('window').height < 500 ? "row" : "column",
+    landscapePasswordContainer:{
+        flexDirection: "row",
         justifyContent: "space-between",
     },
 
-    passwordWrapper:{
-        width:  Dimensions.get('window').height < 500 ? "45%" : "100%"
+    portraitPasswordContainer:{
+        flexDirection: "column",
+        justifyContent: "flex-start",
+    },
+
+    landscapePasswordWrapper:{
+        width: "45%"
+    },
+
+    portraitPasswordWrapper:{
+        width: "100%"
     },
 
     bgImage:{
@@ -110,9 +114,5 @@ const styles = StyleSheet.create({
     
     input:{
        backgroundColor: "#eee"
-    },
-
-    // inputInside:{
-    //     width: "45%"
-    // }
+    }
 })

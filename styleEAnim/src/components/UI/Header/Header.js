@@ -13,6 +13,7 @@ const Styles = StyleSheet.create({
     header:{
         fontSize: 28,
         fontWeight: 'bold',
-        marginBottom: 20
+        marginBottom: 20,
+        color: "black"
     },
 });
