@@ -39,13 +39,20 @@ const startMainTabs = async () =>{
                                 id: 'sideDrawerToggle'
                             }
                         ]
-                    }
+                    },
                 }
             ],
+            tabsStyle:{//ios
+                tabBarSelectedButtonColor: "orange"
+            },
+            
             drawer:{
                 left:{
                     screen: "navigation.SideDrawerScreen"
                 }
+            },
+            appStyle:{//android
+                tabBarSelectedButtonColor: "orange"
             }
         });
     // });
