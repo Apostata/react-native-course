@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ImageBackground, Dimensions } from 'react-native';
+import validate from '../../utils/validation';
+
 import Input from '../../components/UI/Input/Input';
 import Header from '../../components/UI/Header/Header';
 import MainText from '../../components/UI/MainText/MainText'
 import ButtonWithBg from  '../../components/UI/ButtonWithBg/ButtonWithBg'
 import startMainTabs from '../MainTabs/MainTabs';
 import backgroundImage from '../../assets/images/background.jpg';
+
 
 class AuthScreen extends Component {
 
@@ -55,6 +58,17 @@ class AuthScreen extends Component {
     }
 
     updateInputState = (key, value) =>{
+        const {controls} = this.state;
+        let equalToValue = {};
+        
+        
+        if(controls[key].rules.equalTo){
+            const equalToIndex = controls[key].rules.equalTo;
+            equalToValue = {
+                ...equalToValue,
+                equalTo: controls[equalToIndex].value
+            }
+        }
         this.setState(prevState => {
             return {
                 controls:{
@@ -62,6 +76,7 @@ class AuthScreen extends Component {
                     [key]:{
                         ...prevState.controls[key],
                         value: value,
+                        valid: validate(value, prevState.controls[key].rules, equalToValue),
                     } 
                 }
             }
