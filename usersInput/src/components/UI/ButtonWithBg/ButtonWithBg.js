@@ -1,12 +1,20 @@
-import React from 'React'
+import React, {Fragment as F} from 'React'
 import { TouchableOpacity, TouchableNativeFeedback, Platform, Text, View, StyleSheet } from 'react-native';
 
 const buttonWithBg = props =>{
     const content = (
-        <View style={[style.button, {backgroundColor: props.color}]} >
-            <Text>{props.children}</Text>
+        <View style={[style.button, {backgroundColor: props.color}, props.disabled ? style.disabled: null]} >
+            <Text style={style.disabledText}>{props.children}</Text>
         </View>
     );
+    
+    if(props.disabled){
+        return(
+            <F>
+                {content}
+            </F>    
+        );
+    }
 
     if(Platform.OS === 'android'){
         return(
@@ -20,7 +28,7 @@ const buttonWithBg = props =>{
         <TouchableOpacity onPress={props.onPress}>
             {content}
         </TouchableOpacity>
-    )
+    );
 };
 
 
@@ -32,6 +40,14 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderColor: "black"
 
+    },
+    disabled:{
+        backgroundColor:"#eee",
+        
+        borderColor:"#aaa"
+    },
+    disabledText:{
+        color: "#aaa",
     }
 });
 

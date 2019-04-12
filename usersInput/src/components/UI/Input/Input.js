@@ -4,7 +4,7 @@ import { TextInput, StyleSheet } from 'react-native';
 const Input = props =>(
     <TextInput
         {...props} 
-        style={[Styles.input, props.style]}
+        style={[Styles.input, props.style, !props.valid && props.updated ? Styles.invalid : null ]}
     />
 );
 
@@ -18,4 +18,8 @@ const Styles = StyleSheet.create({
         marginTop: 8,
         marginBottom: 8
     },
+    invalid:{
+        backgroundColor:"#f9c0c0",
+        borderColor: "red"
+    }
 });

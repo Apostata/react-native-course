@@ -20,23 +20,26 @@ class AuthScreen extends Component {
                 valid: false,
                 rules: {
                     isEmail: true
-                }
+                },
+                updated: false
             },
             password:{
                 value: "",
                 valid: false,
                 rules: {
                     minLength: 6
-                }
+                },
+                updated: false
             },
             confirmPassword:{
                 value: "",
                 valid: false,
                 rules: {
                     equalTo: 'password'
-                }
-            }
-        }    
+                },
+                updated: false
+            },
+        }
     };
 
     constructor(props){
@@ -62,22 +65,29 @@ class AuthScreen extends Component {
         let equalToValue = {};
         
         
-        if(controls[key].rules.equalTo){
-            const equalToIndex = controls[key].rules.equalTo;
+        if(controls[key].rules.equalTo || key === 'password'){
+            const equalToIndex = key !== 'password'? controls[key].rules.equalTo : 'password';
             equalToValue = {
                 ...equalToValue,
-                equalTo: controls[equalToIndex].value
+                equalTo: key !== 'password'? controls[equalToIndex].value : value
             }
         }
+
         this.setState(prevState => {
             return {
+                ...prevState,
                 controls:{
                     ...prevState.controls,
+                    confirmPassword: {
+                        ...prevState.controls.confirmPassword,
+                        valid : key === 'password' ? validate(prevState.controls.confirmPassword.value, prevState.controls.confirmPassword.rules, equalToValue) : prevState.controls.confirmPassword.valid
+                    },
                     [key]:{
                         ...prevState.controls[key],
                         value: value,
                         valid: validate(value, prevState.controls[key].rules, equalToValue),
-                    } 
+                        updated: true
+                    }, 
                 }
             }
         })
@@ -88,8 +98,15 @@ class AuthScreen extends Component {
     }
 
     render(){
+       
         const {viewMode, controls} = this.state;
         const {email, password, confirmPassword} = controls
+        
+        const isFormValidated =  Object.keys(controls).filter(key=>{
+            return controls[key].valid === true;
+        }).length === Object.keys(controls).length ? true: false;
+
+        
         let headingText = null;
         if(viewMode === "portrait"){
             headingText = (
@@ -108,6 +125,8 @@ class AuthScreen extends Component {
                                 placeholder="seuemail@domínio.com"
                                 style={styles.input}
                                 value={email.value}
+                                valid={email.valid}
+                                updated={email.updated}
                                 onChangeText={(value)=>this.updateInputState('email', value)}
                             />
                             
@@ -117,6 +136,8 @@ class AuthScreen extends Component {
                                         placeholder="Senha"
                                         style={[styles.input, styles.inputInside]}
                                         value={password.value}
+                                        valid={password.valid}
+                                        updated={password.updated}
                                         onChangeText={(value)=>this.updateInputState('password', value)}
                                     />
                                 </View>
@@ -125,12 +146,14 @@ class AuthScreen extends Component {
                                         placeholder="Confirme sua senha" 
                                         style={[styles.input, styles.inputInside]}
                                         value={confirmPassword.value}
+                                        valid={confirmPassword.valid}
+                                        updated={confirmPassword.updated}
                                         onChangeText={(value)=>this.updateInputState('confirmPassword', value)}
                                     />
                                 </View>
                             </View>
                         </View>
-                        <ButtonWithBg color="#29aaf4">Enviar</ButtonWithBg>
+                        <ButtonWithBg color="#29aaf4" disabled={!isFormValidated}>Enviar</ButtonWithBg>
                     
                 </View>
             </ImageBackground>
