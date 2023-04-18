@@ -1,9 +1,9 @@
 import { ColorValue, Platform, Pressable, StyleSheet, Text, View } from "react-native"
 
-const CategoryItem = ({title, color}:{title:string, color:ColorValue })=>{
+const CategoryItem = ({title, color, onPress}:{title:string, color:ColorValue, onPress:()=>void })=>{
 	return (
 		<View style={[Styles.gridItem, Platform.OS ==='android' && {backgroundColor:color}]}>
-			<Pressable style={({pressed})=>[Styles.button, pressed && Styles.buttonPressed]} android_ripple={{color:'#ccc'}}>
+			<Pressable onPress={onPress} style={({pressed})=>[Styles.button, pressed && Styles.buttonPressed]} android_ripple={{color:'#ccc'}}>
 				<View style={[Styles.innerContainer, Platform.OS ==='ios' && {backgroundColor:color}]}>
 					<Text style={Styles.title}>{title}</Text>
 				</View>
@@ -13,6 +13,7 @@ const CategoryItem = ({title, color}:{title:string, color:ColorValue })=>{
 }
 
 export default CategoryItem
+
 const Styles = StyleSheet.create({
 	gridItem:{
 		flex:1,
