@@ -5,6 +5,9 @@ export type rootStackList = {
 	mealsOverview: {
 		categoryId:string,
 	};
+	mealDetails: {
+		id:string,
+	};
   }
   
 export type routeRootStack<RouteName extends keyof rootStackList> =  RouteProp<rootStackList, RouteName>

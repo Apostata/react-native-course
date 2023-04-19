@@ -256,3 +256,4 @@ const Styles = StyleSheet.create({
 	...
 })
 ```
+

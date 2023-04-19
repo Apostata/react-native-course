@@ -4,7 +4,8 @@
 extra dependencies `npx expo install react-native-screens react-native-safe-area-context`
 
 ## Navigation types
-1. stack: `yarn add @react-navigation/native-stack` 
+### stack 
+`yarn add @react-navigation/native-stack` 
 
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
@@ -97,3 +98,102 @@ const Styles = StyleSheet.create({
 you could use the hook `useNavigation` from `@react-navigation/native` when in not a screen direct child of the router or to replace the navigation prop.
 the same for `useRoute` to get data from the page tha you came from.
 
+## Styling Navigation header
+You can determine some aditional styles or change na name in the navigation header in each page:
+
+```tsx
+...
+<NavigationContainer>
+	<Stack.Navigator initialRouteName='mealsCategories' screenOptions={{
+		headerStyle:{ backgroundColor: "#351401"},
+		headerTintColor:'white',
+		contentStyle:{
+		backgroundColor:'#3f2f25'
+		}
+	}}>
+		<Stack.Screen name='mealsCategories' component={CategoryScreen} options={{
+			title: 'All Ctegories',
+		}}/>
+		<Stack.Screen name='mealsOverview' component={MealsOverViewScreen} 
+		// options={({route, navigation})=>{
+		//   const {categoryId} = route.params
+
+		//   return {title:categoryId}
+		// }}
+		/>
+		<Stack.Screen name='mealDetails' component={MealDetailsScreen} />
+	</Stack.Navigator>
+</NavigationContainer>
+...
+```
+When you put styles in the `Navigator` component, in this case `Stack.Navigator`, this style will apply to all screens headers and background
+
+When you put in a single Screen only this screen will change
+
+
+### Dynamically change navigation header
+Lets supose you want to show the title of and meal in the navigation header according to the current meal.
+
+```tsx
+...
+
+const MealDetailsScreen = ()=>{
+	const navigation:  navigationRootStack<'mealDetails'>= useNavigation()
+	const route : routeRootStack<'mealDetails'> = useRoute()
+	const {id} = route.params
+	const meal = MEALS.find((theMeal)=>theMeal.id === id)
+
+	useLayoutEffect(()=>{
+		navigation.setOptions({
+			title: meal?.title
+		})
+	},[navigation])
+
+	return (
+		<ScrollView style={{marginBottom:32}}>
+			...
+		</ScrollView>
+	)
+}
+
+export default MealDetailsScreen
+
+const Styles = StyleSheet.create({
+	...
+})
+```
+So here we used `navigation.setOptions()` function with `useLayoutEffect` (to update the content as soon its changes concurrently) to set the navigation header title to the current meal title
+
+### Adding actions to navigation header
+You can add buttons to the navigation header, in the same way as adding a Dynamic title
+there are `headerRight` and I sopose `headerLetf` too that renders a component in the Header
+
+```tsx
+...
+
+const MealDetailsScreen = ()=>{
+	const navigation:  navigationRootStack<'mealDetails'>= useNavigation()
+	const route : routeRootStack<'mealDetails'> = useRoute()
+	const {id} = route.params
+	const meal = MEALS.find((theMeal)=>theMeal.id === id)
+	...
+	useLayoutEffect(()=>{
+		navigation.setOptions({
+			title: meal?.title,
+			headerRight:()=><IconButton iconName="star" size={20} onPress={headerButtonPressHandler} />
+		})
+	},[navigation])
+
+	return (
+		<ScrollView style={{marginBottom:32}}>
+			...
+		</ScrollView>
+	)
+}
+
+export default MealDetailsScreen
+
+const Styles = StyleSheet.create({
+	...
+})
+```

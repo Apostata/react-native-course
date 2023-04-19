@@ -1,19 +1,27 @@
 import { View, Text, Pressable, Image, StyleSheet, Platform } from "react-native"
+import { useNavigation } from "@react-navigation/native"
+import { navigationRootStack } from "../types/navigation"
+import MealDetails from "./MealDetails/meal-details"
 
-const MealItem = ({title, imageUrl, duration, complexity, affordability}:{title:string, imageUrl:string, duration:number, complexity:string, affordability:string})=>{
+const MealItem = ({id, title, imageUrl, duration, complexity, affordability}:{id:string, title:string, imageUrl:string, duration:number, complexity:string, affordability:string})=>{
+	const navigation: navigationRootStack<'mealDetails'>= useNavigation()
+	
+	const handlePress = ()=>{
+		navigation.navigate('mealDetails', {
+			id
+		})
+	}
+
 	return (
 		<View style={Styles.container}>
-			<Pressable style={({pressed})=>pressed?[Styles.button, Styles.buttonPressed]:Styles.button} android_ripple={{color: '#ccc'}} >
+			<Pressable style={({pressed})=>pressed?[Styles.button, Styles.buttonPressed]:Styles.button} android_ripple={{color: '#ccc'}}  onPress={handlePress}>
 				<View style={Styles.innerContainer}>
 					<View>
 						<Image style={Styles.image} source={{uri:imageUrl}}/>
 						<Text style={Styles.title}>{title}</Text>
 					</View>
-					<View style={Styles.details}>
-						<Text style={Styles.text}>{duration} min</Text>
-						<Text style={Styles.text}>{complexity.toUpperCase()}</Text>
-						<Text style={Styles.text}>{affordability.toUpperCase()}</Text>
-					</View>
+				
+					<MealDetails duration={duration} complexity={complexity} affordability={affordability} />
 				</View>
 			</Pressable>
 			
@@ -62,16 +70,6 @@ const Styles =  StyleSheet.create({
 		fontWeight:'bold',
 		textAlign:'center',
 		fontSize:18
-	},
-	details:{
-		flexDirection:'row',
-		alignItems:'center',
-		justifyContent: 'center',
-		padding:8
-	},
-	text:{
-		marginHorizontal:4,
-		fontSize:12
 	},
 	button:{
 		flex:1
