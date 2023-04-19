@@ -98,6 +98,96 @@ const Styles = StyleSheet.create({
 you could use the hook `useNavigation` from `@react-navigation/native` when in not a screen direct child of the router or to replace the navigation prop.
 the same for `useRoute` to get data from the page tha you came from.
 
+### Drawer
+same as stack to work but generates a sideDrawer
+
+ `yarn add @react-navigation/drawer`
+ `yarn add react-native-gesture-handler react-native-reanimated`
+
+#### bug with react-reanimated v2
+add `react-native-reanimated/plugin` to the `babel.config.js`
+stop expo-server
+and then run `expo r -c` to clear the cache
+start the project again
+```js
+module.exports = function(api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins:['react-native-reanimated/plugin']
+  };
+};
+
+```
+
+#### Config Drawer navigator
+You can change styles and even the component rendered in the Drawer
+```tsx
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+...
+
+const Drawer = createDrawerNavigator<rootDrawerList>()
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName='User' screenOptions={{
+         headerStyle:{ backgroundColor:'#3c0a6b'},
+         headerTintColor:'white',
+        drawerActiveBackgroundColor:'#f0e1ff',
+        drawerActiveTintColor: '#3c0a6b',
+        drawerStyle: {backgroundColor:'#ccc'}
+      }}>
+        <Drawer.Screen  name='Welcome' component={WelcomeScreen} options={{
+          drawerLabel:'Welcome Screen',
+          drawerIcon: ({color, size})=><Ionicons name='home' color={color} size={size}/>
+        }}/>
+        <Drawer.Screen  name='User' component={UserScreen} options={{
+          drawerLabel:'Welcome Screen',
+          drawerIcon: ({color, size})=><Ionicons name='person' color={color} size={size}/>
+        }}/>
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
+```
+#### Programatic Navigation with Drawer
+```tsx
+import { useNavigation, DrawerActions } from '@react-navigation/native';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { navigationRootDrawer } from '../types/navigation';
+
+function UserScreen() {
+  const navigation :navigationRootDrawer<'User'>= useNavigation()
+  
+  const openDrawerProgramatically = ()=>{
+	// navigation.openDrawer() //in js
+    navigation.dispatch(DrawerActions.openDrawer()) // in ts
+  }
+
+  return (
+    <View style={styles.rootContainer}>
+     ...
+      <Button onPress={openDrawerProgramatically} title={'open drawer'} />
+    </View>
+  );
+}
+
+export default UserScreen;
+
+const styles = StyleSheet.create({
+  ...
+});
+
+
+```
+
+
+### Bottom tabs
+`yarn add @react-navigation/bottom-tabs`
 ## Styling Navigation header
 You can determine some aditional styles or change na name in the navigation header in each page:
 
@@ -197,3 +287,4 @@ const Styles = StyleSheet.create({
 	...
 })
 ```
+
