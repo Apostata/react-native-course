@@ -16,7 +16,7 @@ updating expo cli:
 `expo-cli upgrade`
 
 cleaning expo cache
-``
+`expo -c`
 
 ### React Native CLI
 By the react native team e community

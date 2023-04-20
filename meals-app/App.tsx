@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Button, SafeAreaView, StyleSheet } from 'react-native';
+import {  SafeAreaView, StyleSheet } from 'react-native';
 import CategoryScreen from './screens/category-screen';
 import MealDetailsScreen from './screens/meal-details-screen';
 import MealsOverViewScreen from './screens/meals-overview-screen';
@@ -9,7 +9,9 @@ import {rootStackList} from './types/navigation'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoritesScreen from './screens/favorires.screen';
 import {Ionicons} from '@expo/vector-icons'
-import { FavoriteContextProvider } from './store/context/favorites-context';
+// import { FavoriteContextProvider } from './store/context/favorites-context';
+import { Provider } from 'react-redux';
+import {store} from './store/redux/store'
 
 const Stack = createNativeStackNavigator<rootStackList>()
 const Drawer = createDrawerNavigator<rootStackList>()
@@ -43,7 +45,8 @@ export default function App() {
    
     <SafeAreaView style={{flex:1}}>
       <StatusBar style='light' />
-      <FavoriteContextProvider>
+      {/* <FavoriteContextProvider> */}
+      <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='mealsCategories' screenOptions={{
           headerStyle:{ backgroundColor: "#351401"},
@@ -60,7 +63,8 @@ export default function App() {
            <Stack.Screen name='mealDetails' component={MealDetailsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
-      </FavoriteContextProvider>
+      </Provider>
+      {/* </FavoriteContextProvider> */}
     </SafeAreaView>
       
   );

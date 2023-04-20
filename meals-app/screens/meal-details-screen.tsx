@@ -8,8 +8,9 @@ import MealDetails from "../components/Meals/MealDetails/meal-details"
 import SubTitle from "../components/Meals/MealDetails/subtitle"
 import ListDetails from "../components/Meals/MealDetails/list-details"
 import IconButton from "../components/ui/iconButton"
-import { useContextFavorite } from "../store/context/favorites-context"
-
+// import { useContextFavorite } from "../store/context/favorites-context"
+import { useSelector, useDispatch } from "react-redux"
+import { addFavorite, removeFavorite } from "../store/redux/favorite"
 
 const MealDetailsScreen = ()=>{
 	const navigation:  navigationRootStack<'mealDetails'>= useNavigation()
@@ -17,12 +18,15 @@ const MealDetailsScreen = ()=>{
 	const {id} = route.params
 	const meal = MEALS.find((theMeal)=>theMeal.id === id)
 
-	const {ids, addFavorite, removeFavorite} = useContextFavorite()
+	// const {ids, addFavorite, removeFavorite} = useContextFavorite()
+	const {ids} = useSelector((state:{favoriteMeals:{ids:string[]}})=>state.favoriteMeals)
+	const dispatch = useDispatch()
 	const isMealFavorite = ids.includes(id)
 
 
 	const toggleFavorite = ()=>{
-		isMealFavorite? removeFavorite(id): addFavorite(id)
+		// isMealFavorite? removeFavorite(id): addFavorite(id)
+		isMealFavorite? dispatch(removeFavorite(id)) : dispatch(addFavorite(id))
 	}
 
 	useLayoutEffect(()=>{
