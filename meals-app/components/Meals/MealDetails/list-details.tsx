@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native'
-import { generateKey } from '../../utils/functions'
+import { generateKey } from '../../../utils/functions'
 const ListDetails = ({list}: {list:string[]})=>{
 	return (
 	<View style={Styles.listContainer}>

@@ -12,6 +12,12 @@ You can leave Expo ecosystem any time ('eject') to React native CLI
 ou 
 `npx create-expo-app --template`
 
+updating expo cli:
+`expo-cli upgrade`
+
+cleaning expo cache
+``
+
 ### React Native CLI
 By the react native team e community
 Bare-bone development (you need to set up way more)

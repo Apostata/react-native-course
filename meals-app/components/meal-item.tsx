@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Image, StyleSheet, Platform } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { navigationRootStack } from "../types/navigation"
-import MealDetails from "./MealDetails/meal-details"
+import MealDetails from "./Meals/MealDetails/meal-details"
 
 const MealItem = ({id, title, imageUrl, duration, complexity, affordability}:{id:string, title:string, imageUrl:string, duration:number, complexity:string, affordability:string})=>{
 	const navigation: navigationRootStack<'mealDetails'>= useNavigation()

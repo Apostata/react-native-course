@@ -4,10 +4,11 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { navigationRootStack, routeRootStack } from "../types/navigation"
 import { useLayoutEffect } from "react"
 import { MEALS } from "../data/dummy-data"
-import MealDetails from "../components/MealDetails/meal-details"
-import SubTitle from "../components/MealDetails/subtitle"
-import ListDetails from "../components/MealDetails/list-details"
+import MealDetails from "../components/Meals/MealDetails/meal-details"
+import SubTitle from "../components/Meals/MealDetails/subtitle"
+import ListDetails from "../components/Meals/MealDetails/list-details"
 import IconButton from "../components/ui/iconButton"
+import { useContextFavorite } from "../store/context/favorites-context"
 
 
 const MealDetailsScreen = ()=>{
@@ -16,16 +17,20 @@ const MealDetailsScreen = ()=>{
 	const {id} = route.params
 	const meal = MEALS.find((theMeal)=>theMeal.id === id)
 
-	const headerButtonPressHandler = ()=>{
-		console.log('pressed!')
+	const {ids, addFavorite, removeFavorite} = useContextFavorite()
+	const isMealFavorite = ids.includes(id)
+
+
+	const toggleFavorite = ()=>{
+		isMealFavorite? removeFavorite(id): addFavorite(id)
 	}
 
 	useLayoutEffect(()=>{
 		navigation.setOptions({
 			title: meal?.title,
-			headerRight:()=><IconButton iconName="star" size={20} onPress={headerButtonPressHandler} />
+			headerRight:()=><IconButton iconName={isMealFavorite?"star":'star-outline'} size={20} onPress={toggleFavorite} />
 		})
-	},[navigation, meal, headerButtonPressHandler])
+	},[navigation, meal, toggleFavorite])
 
 	return (
 		<ScrollView style={{marginBottom:32}}>

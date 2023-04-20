@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import {  useLayoutEffect } from "react"
-import { View, StyleSheet, FlatList } from "react-native"
-import MealItem from "../components/meal-item"
+import { StyleSheet } from "react-native"
+import MealsList from "../components/Meals/meals-list"
 import { CATEGORIES, MEALS } from "../data/dummy-data"
 import { navigationRootStack, routeRootStack } from "../types/navigation"
 
@@ -19,13 +19,7 @@ const MealsOverViewScreen = ()=>{
 	
 	
 	return (
-		<View style={Styles.container}>
-			<FlatList data={displayMeal} keyExtractor={(item)=>item.id} renderItem={(itemData)=>{
-		const {id, title, imageUrl, duration, complexity, affordability} = itemData.item
-		return <MealItem id={id} title={title} imageUrl={imageUrl} duration={duration} complexity={complexity} affordability={affordability}  />
-	}} />
-			
-		</View>
+		<MealsList meals={displayMeal}/>
 	)
 }
 

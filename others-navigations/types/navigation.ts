@@ -10,5 +10,5 @@ export type navigationRootDrawer<RouteName extends keyof rootDrawerList> = Navig
 
 export type RootDrawer<RouteName extends keyof rootDrawerList> = {
 	navigation:navigationRootDrawer<RouteName>,
-	route: routeRootDrawer< RouteName>
+	route: routeRootDrawer<RouteName>
 }
