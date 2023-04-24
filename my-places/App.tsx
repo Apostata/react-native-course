@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import IconButton from './components/UI/icon-button';
 import AddPlaceScreen from './screens/add-place-screen';
 import AllPlacesScreen from './screens/all-places-screen';
+import MapScreen from './screens/map-screen';
 import PlaceDetailsScreen from './screens/place-details-screen';
 import { Colors } from './theme/colors';
 import { NavigationStack, RootStack, RootStackList } from './types/navigation';
@@ -46,6 +47,7 @@ export default function App() {
             }}
           />
           <Stack.Screen name='PlaceDetails' component={PlaceDetailsScreen} />
+          <Stack.Screen name='Map' component={MapScreen} />
         </Stack.Navigator>
      </NavigationContainer>
     </>

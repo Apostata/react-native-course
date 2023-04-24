@@ -1,11 +1,15 @@
+import { MapLocation } from './index';
 import { RouteProp } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 export type RootStackList ={
 	AllPlaces: undefined,
-	AddPlace: undefined,
+	AddPlace?: {
+		location?:MapLocation
+	},
 	PlaceDetails:{
 		id: string
-	}
+	},
+	Map: undefined
 }
 
 export type NavigationStack<RouteName extends keyof RootStackList> =  NavigationProp<RootStackList, RouteName>
