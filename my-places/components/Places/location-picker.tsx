@@ -3,12 +3,12 @@ import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus, Ac
 import { useEffect, useState } from "react"
 import { View, StyleSheet, Alert, Image, Text } from "react-native"
 import { Colors } from "../../theme/colors"
-import { MapLocation } from "../../types"
+import { MapLocation } from "../../types/location"
 import { NavigationStack, RouteStack } from "../../types/navigation"
-import { getMapImagePreviewUrl } from "../../utils/location"
+import { getAddressByCoors, getMapImagePreviewUrl } from "../../utils/location"
 import OutlinedButton from "../UI/outlined-button"
 
-const LocationPicker = ({onPickedLocation}:{onPickedLocation:(coords:MapLocation)=>void})=>{
+const LocationPicker = ({onPickedLocation}:{onPickedLocation:({coords, address}:{coords:MapLocation, address:string})=>void})=>{
 	const [pickedLocation, setPickedLocation] = useState<MapLocation>()
 	
 	const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
@@ -54,7 +54,14 @@ const LocationPicker = ({onPickedLocation}:{onPickedLocation:(coords:MapLocation
 	},[routeLocation])
 
 	useEffect(()=>{
-		pickedLocation && onPickedLocation(pickedLocation)
+		if(pickedLocation){
+			const {latitude, longitude} = pickedLocation
+			getAddressByCoors(latitude, longitude)
+			.then((resp)=>{
+				onPickedLocation({coords:pickedLocation, address: resp})
+			})
+			
+		} 
 	},[pickedLocation, onPickedLocation])
 
 	return (

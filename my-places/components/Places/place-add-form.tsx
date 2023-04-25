@@ -1,15 +1,16 @@
 import { useCallback, useState } from "react"
 import { ScrollView,StyleSheet } from "react-native"
-import { MapLocation } from "../../types"
+import Place from "../../models/place-model"
+import { GeolocationType } from "../../types/location"
 import Input from "../UI/input"
 import RegularButton from "../UI/regular-button"
 import ImagePicker from "./image-picker"
 import LocationPicker from "./location-picker"
 
-const PlaceAddForm = ()=>{
+const PlaceAddForm = ({onCreatePlace}:{onCreatePlace:(place:Place)=>void})=>{
 	const [name, setName] = useState('')
 	const [pickedImage, setPickedImage] = useState<string>()
-	const [pickedLoaction, setPickedLocation] = useState<MapLocation>()
+	const [pickedLoaction, setPickedLocation] = useState<GeolocationType>()
 
 	const onChangeNameHandler= (value:string) =>{
 		setName(value)
@@ -18,14 +19,13 @@ const PlaceAddForm = ()=>{
 	const onPickedImageHandler = (image:string)=>{
 		setPickedImage(image)
 	}
-	const onPickedLocationHandler = useCallback((coords:MapLocation)=>{
-		setPickedLocation(coords)
+	const onPickedLocationHandler = useCallback((geolocation:GeolocationType)=>{
+		setPickedLocation(geolocation)
 	},[])
 
 	const saveHandler = ()=>{
-		console.log(name)
-		console.log(pickedImage)
-		console.log(pickedLoaction)
+		const newPlace = new Place(name, pickedImage!, pickedLoaction!);
+		onCreatePlace(newPlace)
 	}
 
 	return (

@@ -1,9 +1,10 @@
+import { MapLocation } from './../types/location';
 export interface IPlace{
 	id:string,
 	title: string,
 	imageUrl: string,
 	address: string,
-	location:string
+	location:{latitude:number, longitude:number}
 }
 
 export default class Place implements IPlace {
@@ -11,18 +12,19 @@ export default class Place implements IPlace {
 	title: string
 	imageUrl: string
 	address: string
-	location: string
+	location: {latitude:number, longitude:number}
 	constructor(
 		title:string,
 		imageUrl:string, 
-		address:string, 
-		location:string,
+		location:{coords:MapLocation, address:string},
+		id?:string
 	){
-		this.id = new Date().toString() + Math.random.toString()
+		const {address:newAddress, coords} = location
+		this.id = id || new Date().toString() + Math.random.toString()
 		this.title = title,
 		this.imageUrl= imageUrl,
-		this.address = address,
-		this.location = location
+		this.address = newAddress,
+		this.location = {...coords}
 	}
 	
 }

@@ -1,18 +1,49 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import IconButton from './components/UI/icon-button';
+import { init } from './db';
 import AddPlaceScreen from './screens/add-place-screen';
 import AllPlacesScreen from './screens/all-places-screen';
 import MapScreen from './screens/map-screen';
 import PlaceDetailsScreen from './screens/place-details-screen';
 import { Colors } from './theme/colors';
-import { NavigationStack, RootStack, RootStackList } from './types/navigation';
+import { RootStack, RootStackList } from './types/navigation';
+import * as SplashScreen from 'expo-splash-screen';
 
 const Stack = createNativeStackNavigator<RootStackList>()
 
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false)
+
+  SplashScreen.preventAutoHideAsync()
+  .then((result:any) =>
+    // console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`),
+    {}
+  )
+  .catch(console.warn)
+
+  useEffect(() => {
+    async function hideSplashScreen() {
+      await SplashScreen.hideAsync()
+    }
+    if (dbInitialized) {
+      hideSplashScreen()
+    }
+  }, [dbInitialized])
+
+  useEffect(()=>{
+    init()
+    .then(()=>{
+      setDbInitialized(true)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  },[])
+
   return (
     <>
       <StatusBar style='auto'/>
@@ -46,7 +77,9 @@ export default function App() {
               title: 'Add a new Place'
             }}
           />
-          <Stack.Screen name='PlaceDetails' component={PlaceDetailsScreen} />
+          <Stack.Screen name='PlaceDetails' component={PlaceDetailsScreen} options={{
+            title:'Loading Place...'
+          }}/>
           <Stack.Screen name='Map' component={MapScreen} />
         </Stack.Navigator>
      </NavigationContainer>
