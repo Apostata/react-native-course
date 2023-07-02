@@ -52,10 +52,12 @@ run `yarn start` or `npm start`
 
 ## Core components
 `App.tsx` or `App.js` é o componente principal do app
-
+```tsx
 <Text>only text</Text>
 <View>another components</View>
 <Button title="text" />
+```
+
 
 ## Scrolling components
 
@@ -77,7 +79,6 @@ The FlatList is a better option for a list with a large amount of data, FlatList
       )
     }}
 />
-
 ```
 1. data is the dataSource of your list
 2. renderItem is a function that renders a component for each item in tbe data
@@ -87,14 +88,15 @@ The FlatList is a better option for a list with a large amount of data, FlatList
 ## Pressing and Touch events
 
 ## Pressable
-In newer versions of react native simple wrap the components you want with a <Pressable onPress={onpressHandlerFunction}>
+In newer versions of react native simple wrap the components you want with a 
+`<Pressable onPress={onpressHandlerFunction}>`
 
-The <Button> component can't use a custom style, in that case we would need to create a custom Button component with te Pressable component if you need much diferent styles,
-if you need only to set width or position, just wrap then in a <View>, and then style that view
+The `<Button>` component can't use a custom style, in that case we would need to create a custom Button component with te Pressable component if you need much diferent styles,
+if you need only to set width or position, just wrap then in a `<View>`, and then style that view
 
 
 ## Modals
-A pre-build component to use modals, the <Modal> component.
+A pre-build component to use modals, the `<Modal>` component.
 important attributes of modal:
 1. visible: bolean= if modal isVisible or not 
 2. animationType : "fase"|"none"| "slide"= the modal anitation
@@ -214,4 +216,61 @@ export default function App() {
     
   );
 }
+``` 
+## Build for android without expo
+Open terminal, in windows, use `Gitbash`:
+`keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000`
+
+then move generate file to `/android/app` folder
+
+open `/adndroid/gradle.properties` file an put this lines ate the end, raplacing passwords with te password used to create the keysore
+
+```ts
+MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
+MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
+MYAPP_UPLOAD_STORE_PASSWORD=*****
+MYAPP_UPLOAD_KEY_PASSWORD=*****
 ```
+then, goto `/android/app/build.gradle`
+and add the all the release code in `signingConfigs` and athe `signingConfig signingConfigs.release` at `buildTypes.release`
+
+```ts
+...
+android {
+    ...
+    defaultConfig { ... }
+    signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
+    }
+    buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+}
+...
+
+```
+
+then navigate to `android` folder in a terminal an run this command:
+`./gradlew bundleRelease`
+and your build is done
+
+but, if you see this error:
+`Erro: Não foi possível localizar nem carregar a classe principal org.gradle.wrapper.GradleWrapperMain
+Causada por: java.lang.ClassNotFoundException: org.gradle.wrapper.GradleWrapperMain`
+
+**NOTE: you must have gradle installed in your machine to run the next command, if you don't have, [Gradle installation](https://gradle.org/install/)**
+
+then run `gradle wrapper`
+then run `./gradlew bundleRelease`
+
+and now your build should be done
